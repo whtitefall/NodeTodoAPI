@@ -9,8 +9,16 @@ const {lodash} = require('lodash')
 
 var app  = express()
 
- 
+var port = process.env.PORT || 3000
 
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://bhu078:V38jdh79s9@cluster0-jnumx.mongodb.net/test?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
 
 app.use(bodyParser.json())
 
@@ -85,9 +93,9 @@ app.patch('/todos/:id',(req,res)=>{
 
     })
 
-app.listen(3000, ()=>{
+app.listen(port, ()=>{
 
-    console.log('started on port 3000')
+    console.log(`started on port  ${port}`)
 })
 
 
